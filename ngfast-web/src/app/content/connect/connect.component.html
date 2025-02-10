@@ -1,0 +1,68 @@
+<section class="connect-container">
+  <div class="hero-section">
+    <h1>Let's Connect</h1>
+    <p class="lead-text">
+      Feel free to reach out through social media or the contact form below.
+    </p>
+  </div>
+
+  <div class="social-links">
+    <a *ngFor="let link of socialLinks" 
+       [href]="link.url" 
+       [attr.aria-label]="link.name"
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="social-link">
+      <i [class]="link.iconClass"></i>
+    </a>
+  </div>
+
+  <div class="form-section">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Send a Message</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" placeholder="Your name">
+            <mat-error *ngIf="contactForm.get('name')?.errors?.['required']">
+              Name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Your email">
+            <mat-error *ngIf="contactForm.get('email')?.errors?.['required']">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="contactForm.get('email')?.errors?.['email']">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Message</mat-label>
+            <textarea matInput 
+                      formControlName="message" 
+                      placeholder="Your message"
+                      rows="4">
+            </textarea>
+            <mat-error *ngIf="contactForm.get('message')?.errors?.['required']">
+              Message is required
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-raised-button 
+                  color="primary" 
+                  type="submit"
+                  [disabled]="!contactForm.valid || isSubmitting">
+            {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section> 

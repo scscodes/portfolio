@@ -1,0 +1,57 @@
+<div>
+  <ng-container *ngFor="let project of projects">
+    <div>
+      <div>
+        <button (click)="toggleProject(project)">
+          {{ project.isExpanded ? '−' : '+' }}
+        </button>
+        <div>
+          <div>
+            <h2>{{ project.repository?.name || 'Loading...' }}</h2>
+            <span>{{ project.icon }}</span>
+            <span *ngFor="let lang of getLanguages(project)">
+              {{ lang }}
+            </span>
+          </div>
+          <div>
+            <span>
+              <mat-icon>update</mat-icon>
+              {{ getUpdatedAt(project) }}
+            </span>
+          </div>
+          <p>{{ project.repository?.description || 'Loading description...' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="project.isExpanded" [@expandCollapse]>
+      <div>
+        <div>
+          <h3>Overview</h3>
+          <a *ngIf="getGithubUrl(project)" 
+              [href]="getGithubUrl(project)" 
+              target="_blank">
+            View on GitHub
+          </a>
+        </div>
+
+        <div>
+          <h3>Examples</h3>
+          <button *ngFor="let gist of project.gists"
+                  (click)="loadGist(project, gist.id)">
+            {{ gist.description }}
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <ng-container *ngIf="project.selectedGistContent">
+          <div *ngFor="let file of project.selectedGistContent">
+            <h4>{{ file.filename }}</h4>
+            <pre><code>{{ file.content }}</code></pre>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div> 
