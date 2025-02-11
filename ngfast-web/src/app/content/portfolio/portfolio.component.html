@@ -1,57 +1,78 @@
 <div>
   <ng-container *ngFor="let project of projects">
-    <div>
-      <div>
-        <button (click)="toggleProject(project)">
-          {{ project.isExpanded ? '−' : '+' }}
-        </button>
-        <div>
-          <div>
-            <h2>{{ project.repository?.name || 'Loading...' }}</h2>
-            <span>{{ project.icon }}</span>
-            <span *ngFor="let lang of getLanguages(project)">
-              {{ lang }}
-            </span>
-          </div>
-          <div>
-            <span>
-              <mat-icon>update</mat-icon>
-              {{ getUpdatedAt(project) }}
-            </span>
-          </div>
-          <p>{{ project.repository?.description || 'Loading description...' }}</p>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="project.isExpanded" [@expandCollapse]>
-      <div>
-        <div>
-          <h3>Overview</h3>
-          <a *ngIf="getGithubUrl(project)" 
-              [href]="getGithubUrl(project)" 
-              target="_blank">
-            View on GitHub
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{ (project.repository?.name) || 'Loading...' }}&nbsp;
+          <a class="social-link" 
+             *ngIf="getGithubUrl(project)" 
+             [href]="getGithubUrl(project)" 
+             rel="noopener noreferrer" 
+             target="_blank">
+            <i class="devicon-github-original"></i>
           </a>
-        </div>
+        </mat-card-title>
+        
+        <button mat-icon-button (click)="toggleProject(project)">
+          <mat-icon>{{ project.isExpanded ? 'remove' : 'add' }}</mat-icon>
+        </button>
+      </mat-card-header>
 
-        <div>
-          <h3>Examples</h3>
-          <button *ngFor="let gist of project.gists"
-                  (click)="loadGist(project, gist.id)">
-            {{ gist.description }}
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <ng-container *ngIf="project.selectedGistContent">
-          <div *ngFor="let file of project.selectedGistContent">
-            <h4>{{ file.filename }}</h4>
-            <pre><code>{{ file.content }}</code></pre>
-          </div>
+      <mat-card-subtitle>
+        <ng-container *ngFor="let lang of getLanguages(project)">
+          <span class="project-language-tag" [style.border-color]="getLanguageColor(lang)">{{ lang }}</span>
         </ng-container>
-      </div>
-    </div>
+      </mat-card-subtitle>
+
+      <mat-card-content>
+        <p></p>
+
+        <div *ngIf="project.isExpanded" [@expandCollapse]>
+          <mat-divider></mat-divider>
+          
+          <div>
+            <div>
+              <h3>Overview</h3>
+              <a class="social-link" 
+                 *ngIf="getGithubUrl(project)" 
+                 [href]="getGithubUrl(project)" 
+                 target="_blank">
+                <i class="devicon-github-original"></i>
+                <span>View on GitHub</span>
+              </a>
+            </div>
+
+            <div>
+              <h3>Examples</h3>
+              <div>
+                <button mat-button
+                        *ngFor="let gist of project.gists"
+                        (click)="loadGist(project, gist.id)">
+                  {{ gist.description }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="project.selectedGistContent">
+            <div *ngFor="let file of project.selectedGistContent">
+              <h4>{{ file.filename }}</h4>
+              <mat-card>
+                <pre><code>{{ file.content }}</code></pre>
+              </mat-card>
+            </div>
+          </ng-container>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>View X</mat-card-actions>
+      <mat-card-footer>
+    
+        <span>
+          <mat-icon>update</mat-icon>
+          {{ getUpdatedAt(project) }}
+        </span>
+      </mat-card-footer>
+    </mat-card>
   </ng-container>
 </div> 

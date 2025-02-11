@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './content/structural/header.component';
+import { HeaderComponent } from './core/layout/header.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,

@@ -1,27 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, forkJoin, switchMap } from 'rxjs';
-
-export interface GithubConfig {
-  username: string;
-  profileUrl: string;
-  repositories: string[]; // Now just a list of repo IDs
-}
-
-export interface GistFile {
-  filename: string;
-  content: string;
-}
-
-export interface Repository {
-  id: string;
-  name: string;
-  description: string;
-  html_url: string;
-  languages_url: string;
-  updated_at: string;
-  languages?: { [key: string]: number };  // Add languages property
-}
+import {
+  Repository,
+  GistFile,
+  Project,
+  GithubConfig
+} from '../models/github.types';
+import { PROJECTS } from '../config/projects.config';
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +16,12 @@ export class GithubService {
   private readonly config: GithubConfig = {
     username: 'scscodes',
     profileUrl: 'https://github.com/scscodes',
-    repositories: [
-      'ngfast-reports',
-      '3m-pipeline'
-    ]
+    repositories: PROJECTS.map(p => p.id)
   };
 
   private readonly apiBase = 'https://api.github.com';
   private cachedRepos: Map<string, Repository> = new Map();
+  private cachedProjects: Map<string, Project> = new Map();
 
   constructor(private http: HttpClient) {}
 
@@ -63,16 +47,46 @@ export class GithubService {
     const url = `${this.apiBase}/repos/${this.config.username}/${repoId}`;
     return this.http.get<Repository>(url).pipe(
       switchMap(repo => {
-        // Fetch languages after getting repo data
-        console.log(repo);
         return this.http.get<{ [key: string]: number }>(repo.languages_url).pipe(
           map(languages => {
             repo.languages = languages;
-            console.log('Repository languages:', repo.name, languages);
             this.cachedRepos.set(repoId, repo);
             return repo;
           })
         );
+      })
+    );
+  }
+
+  /**
+   * Get or create a project by ID
+   */
+  getProject(projectId: string): Observable<Project> {
+    const cached = this.cachedProjects.get(projectId);
+    if (cached) {
+      return new Observable(observer => {
+        observer.next(cached);
+        observer.complete();
+      });
+    }
+
+    return this.getRepository(projectId).pipe(
+      map(repo => {
+        const baseProject = PROJECTS.find(p => p.id === projectId);
+        if (!baseProject) {
+          throw new Error(`Project configuration not found for ID: ${projectId}`);
+        }
+
+        const project: Project = {
+          ...baseProject,
+          title: repo.name,
+          subtitle: repo.description,
+          repository: repo,
+          isExpanded: false
+        };
+        
+        this.cachedProjects.set(projectId, project);
+        return project;
       })
     );
   }
@@ -85,6 +99,16 @@ export class GithubService {
       this.getRepository(repoId)
     );
     return forkJoin(repoRequests);
+  }
+
+  /**
+   * Get all projects with repository data
+   */
+  getAllProjects(): Observable<Project[]> {
+    const projectRequests = this.config.repositories.map(repoId => 
+      this.getProject(repoId)
+    );
+    return forkJoin(projectRequests);
   }
 
   /**

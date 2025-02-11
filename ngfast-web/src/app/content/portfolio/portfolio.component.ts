@@ -2,22 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { GithubService, GistFile, Repository } from '../../shared/services/github.service';
-
-interface Project {
-  id: string;
-  title?: string;
-  icon: string;
-  subtitle?: string;
-  repository?: Repository;
-  gists: {
-    description: string;
-    id: string;
-  }[];
-  selectedGistContent?: GistFile[];
-  isExpanded?: boolean;
-}
+import { GithubService } from '../../shared/services/github.service';
+import { Project } from '../../shared/models/github.types';
+import { PROJECTS } from '../../shared/config/projects.config';
 
 @Component({
   selector: 'app-portfolio',
@@ -25,7 +15,9 @@ interface Project {
   imports: [
     CommonModule,
     MatChipsModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatDividerModule
   ],
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss'],
@@ -42,36 +34,16 @@ interface Project {
   ]
 })
 export class PortfolioComponent implements OnInit {
-  readmeIcon = '📄';
-  projects: Project[] = [
-    {
-      id: 'ngfast-reports',
-
-      icon: '🚀',
-      gists: [
-        { description: 'Performance Optimizations', id: 'gist1id' },
-        { description: 'Build Configuration', id: 'gist2id' }
-      ]
-    },
-    {
-      id: '3m-pipeline',
-      icon: '📊',
-      gists: [
-        { description: 'Chart Components', id: 'gist3id' },
-        { description: 'Real-time Updates', id: 'gist4id' }
-      ]
-    }
-  ];
+  projects: Project[] = PROJECTS;
 
   constructor(private githubService: GithubService) {}
 
   ngOnInit() {
     // Load repository data for each project
     this.projects.forEach(project => {
-      this.githubService.getRepository(project.id).subscribe(repo => {
-        project.repository = repo;
-        project.title = repo.name;
-        project.subtitle = repo.description;
+      this.githubService.getProject(project.id).subscribe(updatedProject => {
+        // Merge existing gists with updated project data
+        Object.assign(project, updatedProject, { gists: project.gists });
       });
     });
   }
@@ -104,7 +76,6 @@ export class PortfolioComponent implements OnInit {
    */
   getLanguages(project: Project): string[] {
     if (!project.repository?.languages) {
-      console.log('No languages for project:', project.id);
       return [];
     }
     return Object.keys(project.repository.languages);
@@ -114,19 +85,18 @@ export class PortfolioComponent implements OnInit {
    * Get color for language tag
    */
   getLanguageColor(language: string): string {
-    console.log('Getting color for language:', language);
     // Common language colors, can be expanded
     const colors: { [key: string]: string } = {
-      TypeScript: '#3178c6',
-      JavaScript: '#f1e05a',
-      HTML: '#e34c26',
-      CSS: '#563d7c',
-      SCSS: '#c6538c',
-      Python: '#3572A5',
-      Java: '#b07219',
+      typescript: '#3178C6',
+      javascript: '#F7DF1E',
+      html: '#E34F26',
+      css: '#1572B6',
+      scss: '#CC6699',
+      python: '#3572A5',
+      'jupyter notebook': '#F37626',
       // Add more as needed
     };
-    return colors[language] || '#6e7681';
+    return colors[language.toLowerCase()] || '#6e7681';
   }
 
   /**

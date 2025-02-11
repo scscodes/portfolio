@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +20,7 @@ import { GithubService } from '../../shared/services/github.service';
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
-    NgFor
+    CommonModule
   ],
   templateUrl: './connect.component.html',
   styleUrls: ['./connect.component.scss']

@@ -1,0 +1,166 @@
+/**
+ * Typography styles with responsive scaling
+ * Uses breakpoint mixins for responsive design
+ */
+
+@use 'breakpoints' as bp;
+
+// Base typography settings
+:root {
+  --heading-line-height: 1.2;
+  --body-line-height: 1.6;
+}
+
+// Headings
+h1, .h1 {
+  font-size: 2.5rem;
+  line-height: var(--heading-line-height);
+  margin-bottom: 1rem;
+  font-weight: 700;
+
+  @include bp.breakpoint(md) {
+    font-size: 3rem;
+  }
+
+  @include bp.breakpoint(lg) {
+    font-size: 3.5rem;
+  }
+}
+
+h2, .h2 {
+  font-size: 2rem;
+  line-height: var(--heading-line-height);
+  margin-bottom: 0.875rem;
+  font-weight: 600;
+
+  @include bp.breakpoint(md) {
+    font-size: 2.5rem;
+  }
+
+  @include bp.breakpoint(lg) {
+    font-size: 3rem;
+  }
+}
+
+h3, .h3 {
+  font-size: 1.75rem;
+  line-height: var(--heading-line-height);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+
+  @include bp.breakpoint(md) {
+    font-size: 2rem;
+  }
+
+  @include bp.breakpoint(lg) {
+    font-size: 2.25rem;
+  }
+}
+
+h4, .h4 {
+  font-size: 1.5rem;
+  line-height: var(--heading-line-height);
+  margin-bottom: 0.625rem;
+  font-weight: 500;
+
+  @include bp.breakpoint(md) {
+    font-size: 1.75rem;
+  }
+}
+
+h5, .h5 {
+  font-size: 1.25rem;
+  line-height: var(--heading-line-height);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+
+  @include bp.breakpoint(md) {
+    font-size: 1.5rem;
+  }
+}
+
+h6, .h6 {
+  font-size: 1rem;
+  line-height: var(--heading-line-height);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+
+  @include bp.breakpoint(md) {
+    font-size: 1.25rem;
+  }
+}
+
+// Body text
+p, .body-text {
+  font-size: 1rem;
+  line-height: var(--body-line-height);
+  margin-bottom: 1rem;
+
+  @include bp.breakpoint(md) {
+    font-size: 1.125rem;
+  }
+}
+
+// Lead paragraph
+.lead {
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+
+  @include bp.breakpoint(md) {
+    font-size: 1.25rem;
+  }
+
+  @include bp.breakpoint(lg) {
+    font-size: 1.5rem;
+  }
+}
+
+// Small text
+small, .small {
+  font-size: 0.875rem;
+  line-height: 1.4;
+
+  @include bp.breakpoint(md) {
+    font-size: 0.9375rem;
+  }
+}
+
+// Text utilities
+.text-muted {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+// Font weights
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}

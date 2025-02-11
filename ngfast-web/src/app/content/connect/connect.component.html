@@ -6,13 +6,13 @@
     </p>
   </div>
 
-  <div class="social-links">
+  <div class="social-links-container social-links-container--center">
     <a *ngFor="let link of socialLinks" 
        [href]="link.url" 
        [attr.aria-label]="link.name"
        target="_blank" 
        rel="noopener noreferrer" 
-       class="social-link">
+       class="social-icon social-icon--lg">
       <i [class]="link.iconClass"></i>
     </a>
   </div>
