@@ -1,0 +1,42 @@
+<mat-toolbar color="primary">
+  <a mat-button routerLink="/">
+    <span class="logo">NgFast</span>
+  </a>
+  <span class="spacer"></span>
+  
+  <!-- Desktop Navigation -->
+  <div class="nav-links desktop-only">
+    <a mat-button routerLink="/about">About</a>
+    <a mat-button routerLink="/portfolio">Portfolio</a>
+    <a mat-button routerLink="/connect">Connect</a>
+    <a mat-button routerLink="/generic">Generic</a>
+  </div>
+
+  <span class="spacer"></span>
+  
+  <!-- Mobile Menu Button -->
+  <button mat-icon-button 
+          [matMenuTriggerFor]="menu" 
+          class="mobile-only menu-button">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Mobile Menu -->
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item routerLink="/about">About</a>
+    <a mat-menu-item routerLink="/portfolio">Portfolio</a>
+    <a mat-menu-item routerLink="/connect">Connect</a>
+    <a mat-menu-item routerLink="/generic">Generic</a>
+    <mat-divider></mat-divider>
+    <div class="menu-controls">
+      <app-settings-button></app-settings-button>
+      <app-auth-button></app-auth-button>
+    </div>
+  </mat-menu>
+
+  <!-- Desktop Controls -->
+  <div class="nav-controls desktop-only">
+    <app-settings-button></app-settings-button>
+    <app-auth-button></app-auth-button>
+  </div>
+</mat-toolbar> 

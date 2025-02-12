@@ -1,0 +1,90 @@
+/**
+ * Material Snackbar Custom Styles
+ * 
+ * Provides themed snackbar variants for different message types.
+ * Supports responsive sizing and positioning based on viewport.
+ * 
+ * Usage with Angular Material:
+ * this.snackBar.open('Message', 'Action', {
+ *   panelClass: ['success-snackbar'],  // or 'error-snackbar', 'warning-snackbar', etc.
+ *   duration: 3000
+ * });
+ */
+
+@use '../abstracts/colors' as *;
+@use '../abstracts/breakpoints' as *;
+
+// Base snackbar styles
+.mat-snack-bar-container {
+  &.success-snackbar,
+  &.error-snackbar,
+  &.warning-snackbar,
+  &.info-snackbar {
+    border-radius: 4px;
+    
+    .mat-simple-snackbar {
+      font-weight: 500;
+      
+      // Action button styles
+      .mat-simple-snackbar-action {
+        color: white;
+        
+        button {
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+      }
+    }
+    
+    // Responsive sizing
+    @include breakpoint-down(sm) {
+      margin: 8px;
+      min-width: auto;
+      max-width: calc(100vw - 16px);
+    }
+  }
+}
+
+// Success variant
+.success-snackbar {
+  background: color('success', 'base');
+  color: white;
+  
+  &:hover {
+    background: color('success', 'dark');
+  }
+}
+
+// Error variant
+.error-snackbar {
+  background: color('error', 'base');
+  color: white;
+  
+  &:hover {
+    background: color('error', 'dark');
+  }
+}
+
+// Warning variant
+.warning-snackbar {
+  background: color('warning', 'base');
+  color: black;
+  
+  .mat-simple-snackbar-action {
+    color: black;
+  }
+  
+  &:hover {
+    background: color('warning', 'dark');
+  }
+}
+
+// Info variant
+.info-snackbar {
+  background: color('info', 'base');
+  color: white;
+  
+  &:hover {
+    background: color('info', 'dark');
+  }
+}

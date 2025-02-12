@@ -1,26 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@use "abstracts/breakpoints";
+@use "abstracts/colors";
+@use "abstracts/icons";
+@use "abstracts/mixins";
+@use "abstracts/typography";
+@use "abstracts/variables";
 
-@use 'app/styles/social';
-@use 'app/styles/mat-card';
-@use 'app/styles/pill';
-@use 'app/styles/breakpoints';
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@use "layout/grid";
+@use "layout/header";
+@use "layout/sidebar";
+@use "layout/footer";
+@use "layout/main";
 
-.success-snackbar {
-  background: #43a047;
-  color: white;
-  
-  .mat-simple-snackbar-action {
-    color: white;
-  }
+@use "components/mat-card";
+@use "components/pill";
+@use "components/snackbar";
+
+@use "utilities/spacing";
+@use "utilities/visibility";
+
+// Global Reset & Box Model
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.error-snackbar {
-  background: #d32f2f;
-  color: white;
-  
-  .mat-simple-snackbar-action {
-    color: white;
-  }
+// Root Variables (Handled in _variables.scss)
+html, body {
+  height: 100%;
+  min-height: 100vh;
+  font-family: var(--font-primary, 'Roboto', sans-serif);
+  background-color: var(--background-color, #f8f9fa);
+  color: var(--text-color, #212529);
+  display: flex;
+  flex-direction: column;
+  scroll-behavior: smooth;
 }

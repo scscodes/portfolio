@@ -1,0 +1,156 @@
+/**
+ * Core Color System
+ * This stylesheet defines the core color palette for the application.
+ * 
+ * Usage:
+ * 1. Direct SCSS access using the color function:
+ *    color('primary', 'base')    -> #007bff
+ *    color('secondary', 'light') -> #868e96
+ *    color('secondary', 'dark')  -> #495057
+ * 
+ * 2. CSS Variables (defined in _variables.scss):
+ *    var(--color-primary-base)   -> Primary color
+ *    var(--color-error-base)     -> Error state color
+ * 
+ * 3. Vendor-specific colors for branding:
+ *    color('vendor', 'github')   -> GitHub brand color
+ *    color('vendor', 'angular')  -> Angular brand color
+ * 
+ * Color Variants:
+ * - base: Default/main color
+ * - light: Lighter shade (useful for hover states)
+ * - dark: Darker shade (useful for active states)
+ * 
+ * Example Usage in SCSS:
+ * .github-icon {
+ *   color: color('vendor', 'github');
+ * }
+ * .button {
+ *   background-color: color('primary');
+ *   &:hover {
+ *     background-color: color('primary', 'light');
+ *   }
+ *   &:active {
+ *     background-color: color('primary', 'dark');
+ *   }
+ * }
+ */
+
+// Color function to safely access the color map
+@function color($palette, $tone: 'base') {
+  @if map-has-key($colors, $palette) {
+    $color: map-get($colors, $palette);
+    @if map-has-key($color, $tone) {
+      @return map-get($color, $tone);
+    }
+    @error "Unknown tone `#{$tone}` in palette `#{$palette}`.";
+  }
+  @error "Unknown palette `#{$palette}` in $colors map.";
+}
+
+
+// Core color palette
+$colors: (
+  primary: (
+    base: #007bff,
+    light: #4da3ff,
+    dark: #0056b3
+  ),
+  secondary: (
+    base: #6c757d,
+    light: #868e96,
+    dark: #495057
+  ),
+  accent: (
+    base: #fd7e14,
+    light: #fd9843,
+    dark: #c85e02
+  ),
+  success: (
+    base: #28a745,
+    light: #34ce57,
+    dark: #1e7e34
+  ),
+  warning: (
+    base: #ffc107,
+    light: #ffce3a,
+    dark: #d39e00
+  ),
+  error: (
+    base: #dc3545,
+    light: #e4606d,
+    dark: #bd2130
+  ),
+  info: (
+    base: #17a2b8,
+    light: #1fc8e3,
+    dark: #117a8b
+  ),
+  vendor: (
+    github: #181717,       // GitHub black
+    jupyter: #f37626,      // Jupyter Notebook orange
+    python: #3776ab,       // Python blue
+    html: #e34c26,         // HTML5 orange
+    typescript: #3178c6,   // TypeScript blue
+    angular: #dd0031,      // Angular red
+    javascript: #f7df1e,   // JavaScript yellow
+    scss: #c6538c,         // SCSS/Sass pink
+    css: #264de4,         // CSS3 blue
+    nodejs: #339933,      // Node.js green
+    react: #61dafb,       // React blue
+    vue: #4fc08d,         // Vue.js green
+    docker: #2496ed,      // Docker blue
+    kubernetes: #326ce5,   // Kubernetes blue
+    aws: #ff9900          // AWS orange
+  )
+);
+// Function to get color values (Now defaults to 'base' if tone isn't provided)
+@function color($color-name, $tone: null) {
+  $variable-name: '--color-' + $color-name;
+
+  // Handle vendor colors separately
+  @if $color-name == 'vendor' {
+    @if $tone != null {
+      $variable-name: '--color-vendor-' + $tone;
+    }
+  } @else {
+    @if $tone != null {
+      $variable-name: '--color-' + $color-name + '-' + $tone;
+    }
+  }
+
+  // If color exists in the SCSS map, return the value or fallback to CSS variable
+  @if map-has-key($colors, $color-name) {
+    $color: map-get($colors, $color-name);
+
+    // If no tone is provided, return the base color (Default behavior)
+    @if $tone == null {
+      @return var(#{$variable-name}, map-get($color, 'base'));
+    }
+
+    // If tone is provided, return the corresponding variant
+    @if map-has-key($color, $tone) {
+      @return var(#{$variable-name}, map-get($color, $tone));
+    }
+
+    @error 'Invalid tone `#{$tone}` for color `#{$color-name}`.';
+  }
+
+  @error 'Invalid color name `#{$color-name}`.';
+}
+
+// Define CSS Variables in :root
+:root {
+  @each $color-name, $shades in $colors {
+    @if $color-name == 'vendor' {
+      @each $vendor, $value in $shades {
+        --color-vendor-#{$vendor}: #{$value};
+      }
+    } @else {
+      --color-#{$color-name}: #{map-get($shades, 'base')}; // Default/base color
+      @each $tone, $value in $shades {
+        --color-#{$color-name}-#{$tone}: #{$value};
+      }
+    }
+  }
+}

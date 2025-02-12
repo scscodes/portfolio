@@ -1,10 +1,10 @@
 /**
  * Breakpoint mixins for responsive design
  * Usage:
- * @include breakpoint(sm) { ... }
- * @include breakpoint(md) { ... }
- * @include breakpoint(lg) { ... }
- * @include breakpoint(xl) { ... }
+ * @include break.breakpoint(sm) { ... }
+ * @include break.breakpoint(md) { ... }
+ * @include break.breakpoint(lg) { ... }
+ * @include break.breakpoint(xl) { ... }
  */
 
 @use 'sass:map';
@@ -43,46 +43,9 @@ $breakpoints: (
   }
 }
 
-// Container widths
-.container {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 1rem;
-  padding-left: 1rem;
-
-  @include breakpoint(sm) {
-    max-width: 540px;
-  }
-
-  @include breakpoint(md) {
-    max-width: 720px;
-  }
-
-  @include breakpoint(lg) {
-    max-width: 960px;
-  }
-
-  @include breakpoint(xl) {
-    max-width: 1140px;
-  }
-
-  @include breakpoint(xxl) {
-    max-width: 1320px;
-  }
-}
-
-// Responsive font sizes
-:root {
-  --base-font-size: 16px;
-  
-  @include breakpoint(md) {
-    --base-font-size: 17px;
-  }
-  
-  @include breakpoint(lg) {
-    --base-font-size: 18px;
-  }
+// Export breakpoints map if needed by other modules
+@function get-breakpoints() {
+  @return $breakpoints;
 }
 
 // Responsive spacing

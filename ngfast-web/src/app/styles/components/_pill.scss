@@ -1,0 +1,110 @@
+/**
+ * Pills - Visual indicators and labels
+ * 
+ * Supports both filled and outlined variants using CSS variables
+ * for consistent theming and vendor-specific branding colors.
+ * 
+ * Usage:
+ * Standard Colors:
+ * <span class="pill">Default</span>
+ * <span class="pill primary">Primary</span>
+ * <span class="pill secondary">Secondary</span>
+ * <span class="pill success">Success</span>
+ * <span class="pill warning">Warning</span>
+ * <span class="pill error">Error</span>
+ * <span class="pill info">Info</span>
+ * 
+ * Standard Colors (Outlined):
+ * <span class="pill primary outline">Primary</span>
+ * <span class="pill secondary outline">Secondary</span>
+ * 
+ * Vendor/Technology Colors:
+ * <span class="pill github">GitHub</span>
+ * <span class="pill jupyter">Jupyter</span>
+ * <span class="pill typescript">TypeScript</span>
+ * <span class="pill html">HTML</span>
+ * <span class="pill css">CSS</span>
+ * <span class="pill scss">SCSS</span>
+ * <span class="pill javascript">JavaScript</span>
+ * <span class="pill python">Python</span>
+ * 
+ * Vendor/Technology Colors (Outlined):
+ * <span class="pill github outline">GitHub</span>
+ * <span class="pill jupyter outline">Jupyter</span>
+ * ... etc ...
+ */
+@use "../abstracts/colors" as *;
+@use "sass:color";
+
+// Mixin for text contrast
+@mixin contrast-text($color-var) {
+  @if $color-var == 'warning' or $color-var == 'javascript' {
+    color: #000000;
+  } @else {
+    color: #ffffff;
+  }
+}
+
+.pill {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 50px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all 0.2s ease-in-out;
+  background-color: var(--color-secondary-light);
+  color: #fff;
+  border: 2px solid transparent;
+
+  // Standard color variants using CSS variables
+  @each $name in (primary, secondary, success, warning, error, info) {
+    &.#{$name} {
+      background-color: var(--color-#{$name}-base);
+      border-color: var(--color-#{$name}-base);
+      @include contrast-text($name);
+
+      &.outline {
+        background-color: transparent;
+        border: 2px solid var(--color-#{$name}-base);
+        color: var(--color-#{$name}-base);
+
+        &:hover {
+          background-color: var(--color-#{$name}-base);
+          @include contrast-text($name);
+        }
+      }
+
+      &:hover {
+        background-color: var(--color-#{$name}-dark);
+        border-color: var(--color-#{$name}-dark);
+      }
+    }
+  }
+
+  // Vendor-specific variants using CSS variables
+  @each $vendor in (github, jupyter, typescript, html, css, scss, javascript, python) {
+    &.#{$vendor} {
+      background-color: var(--color-#{$vendor});
+      border-color: var(--color-#{$vendor});
+      @include contrast-text($vendor);
+
+      &.outline {
+        background-color: transparent;
+        border: 2px solid var(--color-#{$vendor});
+        color: var(--color-#{$vendor});
+
+        &:hover {
+          background-color: var(--color-#{$vendor});
+          @include contrast-text($vendor);
+        }
+      }
+
+      &:hover {
+        filter: brightness(90%);
+      }
+    }
+  }
+}

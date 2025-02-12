@@ -1,0 +1,60 @@
+/**
+ * Icon styling system
+ * 
+ * Simple usage:
+ * <i class="icon-inline github"></i>     // Inline icon
+ * <i class="icon-hero angular"></i>      // Hero/featured icon
+ * 
+ * Size variants:
+ * <i class="icon-inline aws size-lg"></i>    // Large inline icon
+ * <i class="icon-inline python size-sm"></i>  // Small inline icon
+ * 
+ * The system automatically:
+ * - Applies vendor-specific colors
+ * - Handles responsive scaling for hero icons
+ * - Maintains consistent sizing and alignment
+ */
+
+@use 'colors' as *;
+@use 'breakpoints' as break;  // Changed alias to avoid naming conflict
+
+// Base icon styles
+.icon-inline,
+.icon-hero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+// Inline icon base styles
+.icon-inline {
+  font-size: 1.25rem;
+  
+  &.size-sm { font-size: 1rem; }
+  &.size-lg { font-size: 1.75rem; }
+}
+
+// Hero icon base styles with responsive scaling
+.icon-hero {
+  font-size: 2.5rem;
+  
+  @include break.breakpoint(md) {  // Using the correct namespace
+    font-size: 3.5rem;
+  }
+  
+  @include break.breakpoint(lg) {  // Using the correct namespace
+    font-size: 4.5rem;
+  }
+}
+
+// Generate vendor-specific color classes
+@each $vendor, $color in map-get($colors, 'vendor') {
+  .icon-inline.#{$vendor},
+  .icon-hero.#{$vendor} {
+    color: $color;
+  }
+}
+
+
+
