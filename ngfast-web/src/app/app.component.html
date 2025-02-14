@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+  <span class="logo">SCSCODES</span>
+  
+  <span class="spacer"></span>
+  
+  <!-- Desktop menu -->
+  <nav class="desktop-nav">
+    <button mat-button routerLink="/home">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </button>
+    <button mat-button routerLink="/generic">
+      <mat-icon>person</mat-icon>
+      <span>Generic</span>
+    </button>
+    <button mat-button routerLink="/settings">
+      <mat-icon>settings</mat-icon>
+      <!-- <span>Settings</span> -->
+    </button>
+  </nav>
+
+  <!-- Mobile menu button -->
+  <button 
+    mat-icon-button 
+    class="mobile-menu-button" 
+    (click)="sidenav.toggle()"
+    aria-label="Toggle navigation menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="over" position="end" [opened]="false">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home" (click)="sidenav.close()">Home</a>
+      <a mat-list-item routerLink="/generic" (click)="sidenav.close()">Generic</a>
+      <a mat-list-item routerLink="/settings" (click)="sidenav.close()">Settings</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

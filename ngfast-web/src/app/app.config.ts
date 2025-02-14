@@ -18,7 +18,8 @@ export const appConfig: ApplicationConfig = {
       authorizationParams: {
         redirect_uri: 'http://localhost:4200',
       },
-    }), provideAnimationsAsync('noop'),
+    }), 
+    provideAnimationsAsync(),
 
   ]
 };

@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   selector: 'app-home',
   standalone: true,
   imports: [],
-  template: ``,
+  template: `home!`,
   styles: ``
 })
 export class HomeComponent {
