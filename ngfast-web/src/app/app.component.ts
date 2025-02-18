@@ -20,20 +20,11 @@ import { MatListModule } from '@angular/material/list';
     MatListModule],
   templateUrl: './app.component.html',
   styles: `
-// todo consolidate this into sidenav styles
-  .sidenav-container {
-  height: calc(100vh - 64px);
-}
-
-mat-sidenav {
-  width: 250px;
-}
-
   `
 
 })
 export class AppComponent {
-  title = 'ngfast-web';
+  title = 'SCSCODES';
 
   constructor() {
     console.log('AppComponent');

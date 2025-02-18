@@ -1,4 +1,4 @@
-import { Project } from '../models/github.types';
+import { Project } from '../github/github.types';
 
 /**
  * Project configuration data

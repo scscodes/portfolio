@@ -6,8 +6,8 @@ import {
   GistFile,
   Project,
   GithubConfig
-} from '../models/github.types';
-import { PROJECTS } from '../config/projects.config';
+} from './github.types';
+import { PROJECTS } from '../resources/projects.config';
 
 @Injectable({
   providedIn: 'root'
