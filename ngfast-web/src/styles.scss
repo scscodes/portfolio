@@ -1,40 +1,42 @@
-@use "abstracts/breakpoints";
-@use "abstracts/colors";
-@use "abstracts/icons";
-@use "abstracts/mixins";
-@use "abstracts/typography";
-@use "abstracts/variables";
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
-@use "layout/grid";
-@use "layout/header";
-@use "layout/sidenav";
-@use "layout/footer";
-@use "layout/main";
-
-@use "components/mat-card";
-@use "components/pill";
-@use "components/snackbar";
-
-@use "utilities/spacing";
-@use "utilities/visibility";
-
-// Global Reset & Box Model
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-// Root Variables (Handled in _variables.scss)
 html, body {
   height: 100%;
-  min-height: 100vh;
-  font-family: var(--font-primary, 'Roboto', sans-serif);
-  background-color: var(--background-color, #f8f9fa);
-  color: var(--text-color, #212529);
-  display: flex;
-  flex-direction: column;
-  scroll-behavior: smooth;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Global container styles */
+.container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Global utility classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+  }
 }

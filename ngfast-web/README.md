@@ -1,59 +1,106 @@
-# NgfastWeb
+# Steven Salmons - Portfolio
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.1.
+A modern, responsive portfolio Single Page Application built with Angular and Angular Material, showcasing Steven Salmons' professional experience, skills, and projects.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Modern Design**: Clean, responsive design with Angular Material components
+- **Portfolio Showcase**: Display of software engineering and DevOps projects with filtering by type
+- **Detailed Project Pages**: Showcase project details, technologies, and challenges
+- **About/Resume Section**: Presents professional experience, education, and skills
+- **Responsive Layout**: Optimized for all device sizes
 
-```bash
-ng serve
+## Technologies Used
+
+- Angular 19
+- Angular Material
+- TypeScript
+- SCSS with BEM methodology
+- RxJS
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── about/
+│   │   ├── home/
+│   │   └── portfolio/
+│   │       └── project-detail/
+│   ├── shared/
+│   │   ├── layout/
+│   │   ├── models/
+│   │   ├── pipes/
+│   │   └── services/
+│   ├── app.component.ts
+│   ├── app.config.ts
+│   └── app.routes.ts
+├── assets/
+│   └── images/
+└── styles.scss
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Getting Started
 
-## Code scaffolding
+### Prerequisites
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node.js (v18 or higher)
+- npm (v9 or higher)
 
-```bash
-ng generate component component-name
-```
+### Installation
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. Clone the repository
+   ```bash
+   git clone https://github.com/scscodes/portfolio.git
+   cd portfolio
+   ```
 
-```bash
-ng generate --help
-```
+2. Install dependencies
+   ```bash
+   npm install
+   ```
 
-## Building
+3. Start the development server
+   ```bash
+   npm start
+   ```
 
-To build the project run:
+4. Open your browser and navigate to `http://localhost:4200`
 
-```bash
-ng build
-```
+## Deployment to GitHub Pages
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Manual Deployment
 
-## Running unit tests
+1. Build the application with the GitHub Pages base href
+   ```bash
+   npm run build
+   ```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+2. Deploy to GitHub Pages
+   ```bash
+   npm run deploy
+   ```
 
-```bash
-ng test
-```
+### Automated Deployment
 
-## Running end-to-end tests
+This project is configured with a GitHub Actions workflow that automatically deploys to GitHub Pages when changes are pushed to the main branch.
 
-For end-to-end (e2e) testing, run:
+1. Push your changes to the main branch
+   ```bash
+   git push origin main
+   ```
 
-```bash
-ng e2e
-```
+2. GitHub Actions will automatically build and deploy the application to GitHub Pages.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+3. Your site will be available at `https://[your-github-username].github.io/portfolio/`
 
-## Additional Resources
+## Contact
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- GitHub: [github.com/scscodes](https://github.com/scscodes)
+- LinkedIn: [linkedin.com/in/ssalmons](https://linkedin.com/in/ssalmons)
+- Email: stevencsalmons@gmail.com
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
